@@ -16,7 +16,7 @@ void setup() {
   pinMode(PIN_LED_3, OUTPUT);
   pinMode(PIN_LED_4, OUTPUT);
 
-  randomSeed(A5); //genero una nueva semilla de un pin analógico al aire
+  randomSeed(analogRead(A5)); //genero una nueva semilla de un pin analógico al aire
 
 }
 
@@ -54,15 +54,16 @@ int detectaFlanco(int pin) {
 void iluminaLed(int pin_led) {
   for (int i = PIN_LED_1; i <= PIN_LED_4; i++) {
     digitalWrite(i, HIGH);
-    delay(500);
+    delay(100);
     digitalWrite(i, LOW);
-    delay(500);
+    delay(100);
   }
-  for (int i = PIN_LED_4; i <= PIN_LED_1; i--) {
+  for (int i = PIN_LED_4; i >= PIN_LED_1; i--) {
     digitalWrite(i, HIGH);
-    delay(500);
+    delay(100);
     digitalWrite(i, LOW);
-    delay(500);
+    delay(100);
   }
   digitalWrite(pin_led, HIGH);
+  Serial.println("Enciendo pin: " + (String)pin_led);
 }
