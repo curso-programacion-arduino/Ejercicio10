@@ -23,7 +23,7 @@ void setup() {
 void loop() {
   if (detectaFlanco(PIN_BOTON_A) == -1) {
 
-    byte randNumber = random(1, 5);
+    byte randNumber = random(PIN_LED_1, PIN_LED_4+1);
     Serial.println(randNumber);
     iluminaLed(randNumber);
   }
