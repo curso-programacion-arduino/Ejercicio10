@@ -1,29 +1,28 @@
-#define PIN_BOTON_A 2
-#define PIN_LED_1 4
-#define PIN_LED_2 5 //PWM
-#define PIN_LED_3 6 //PWM
-#define PIN_LED_4 7
+#define BOTON 2
+#define LED1 4
+#define LED2 5
+#define LED3 6
+#define LED4 7
+
+long randNumber;
 
 void setup() {
-  //Inicializo puerto serie
   Serial.begin(9600);
+  Serial.println(F("Iniciando pines..."));
 
-  //Inicializo Pines
-  Serial.println(F("Inicializando pines digitales..."));
-  pinMode(PIN_BOTON_A, INPUT_PULLUP);
-  pinMode(PIN_LED_1, OUTPUT);
-  pinMode(PIN_LED_2, OUTPUT);
-  pinMode(PIN_LED_3, OUTPUT);
-  pinMode(PIN_LED_4, OUTPUT);
+  pinMode(BOTON, INPUT_PULLUP);
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(LED4, OUTPUT);
 
-  randomSeed(analogRead(A5)); //genero una nueva semilla de un pin analógico al aire
-
+  randomSeed(analogRead(A3)); //semilla con pin analógico libre
 }
 
 void loop() {
-  if (detectaFlanco(PIN_BOTON_A) == -1) {
+  if (detectaFlanco(BOTON) == -1) {
 
-    byte randNumber = random(PIN_LED_1, PIN_LED_4+1);
+    byte randNumber = random(LED1, LED4+1);
     Serial.println(randNumber);
     iluminaLed(randNumber);
   }
@@ -52,13 +51,13 @@ int detectaFlanco(int pin) {
 }
 
 void iluminaLed(int pin_led) {
-  for (int i = PIN_LED_1; i <= PIN_LED_4; i++) {
+  for (int i = LED1; i <= LED4; i++) {
     digitalWrite(i, HIGH);
     delay(100);
     digitalWrite(i, LOW);
     delay(100);
   }
-  for (int i = PIN_LED_4; i >= PIN_LED_1; i--) {
+  for (int i = LED4; i >= LED1; i--) {
     digitalWrite(i, HIGH);
     delay(100);
     digitalWrite(i, LOW);
