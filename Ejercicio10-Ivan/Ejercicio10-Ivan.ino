@@ -20,33 +20,38 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (detectarFlanco(digitalRead(pin))) {
-    aleatorio = random(4,8);
-    Serial.println(aleatorio);
-    digitalWrite(aleatorio,HIGH);
-  } else {
-    apaga();
+  switch (detectarFlanco(digitalRead(pin))) {
+    case 1:
+      aleatorio = random(4, 8);
+      Serial.println(aleatorio);
+      digitalWrite(aleatorio, HIGH);
+      break;
+    case 0:
+      break;
+    case -1:
+      apaga();
+      break;
   }
 }
 
-boolean detectarFlanco(boolean estado) { // funcion para detectar el cambio de estado del pin
+int detectarFlanco(boolean estado) { // funcion para detectar el cambio de estado del pin
   if (estado == true && flanco == 0) {
     flanco = 1;
     //pulsaciones += 10;
     Serial.println("Flanco ascendente!");
-    return true;
+    return 1;
   }
   if (estado == false && flanco == 1) { // si pin deja de estar high ponemos el flanco a 0
     flanco = 0;
     Serial.println("Flanco descendente!");
-    return false;
+    return -1;
   }
   if (estado == true && flanco == 1) {
-    
+    return 0;
   }
 }
-void apaga(){
-  for (int i = led1;i < led4;i++){
-    digitalWrite(i,LOW);
+void apaga() {
+  for (int i = led1; i <= led4; i++) {
+    digitalWrite(i, LOW);
   }
 }
